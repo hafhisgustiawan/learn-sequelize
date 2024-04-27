@@ -1,0 +1,15 @@
+{
+  "name": "learn-sequelize",
+  "version": "1.0.0",
+  "description": "Learn node js with sequelize",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "sequelize"
+  ],
+  "author": "Hafhis Gustiawan",
+  "license": "ISC"
+}
