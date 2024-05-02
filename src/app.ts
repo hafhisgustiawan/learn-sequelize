@@ -12,6 +12,7 @@ import helmet from 'helmet';
 //fn or class import
 import AppError from './utils/appError.js';
 import globalErrorHandler from './controllers/errorController.js';
+import productRouter from './routes/productRouter.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -63,6 +64,8 @@ app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
+
+app.use('/api/v1/products', productRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Cant find ${req.originalUrl} on this server`, 404));
