@@ -2,6 +2,7 @@ import catchAsync from '../utils/catchAsync.js';
 import { productValidationSchema, } from '../utils/validations/productValidation.js';
 import { idValidationSchema } from '../utils/validations/idValidation.js';
 import Product from '../models/productModel.js';
+import { createOne } from './handlerFactory.js';
 export const getAllProducts = catchAsync(async (req, res) => {
     const products = await Product.findAll();
     res.status(200).json({
@@ -17,11 +18,8 @@ export const getProduct = catchAsync(async (req, res) => {
         data: product,
     });
 });
-export const createProduct = catchAsync(async (req, res) => {
+export const validateProduct = catchAsync(async (req, res, next) => {
     await productValidationSchema.validate(req.body);
-    const product = await Product.create(req.body);
-    res.status(200).json({
-        status: 'success',
-        data: product,
-    });
+    next();
 });
+export const createProduct = createOne(Product);

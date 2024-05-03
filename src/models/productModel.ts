@@ -1,9 +1,25 @@
-import { DataTypes } from 'sequelize';
+import {
+  CreationOptional,
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+} from 'sequelize';
 import sequelize from '../utils/database.js';
 
-const Product = sequelize.define('product', {
+export interface IProduct
+  extends Model<InferAttributes<IProduct>, InferCreationAttributes<IProduct>> {
+  // Some fields are optional when calling UserModel.create() or UserModel.build()
+  id: CreationOptional<number>;
+  title: string;
+  price: number;
+  imageUrl: string;
+  description: string;
+}
+
+const Product = sequelize.define<IProduct>('product', {
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER.UNSIGNED,
     autoIncrement: true,
     primaryKey: true,
     allowNull: false,

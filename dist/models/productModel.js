@@ -1,8 +1,8 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, } from 'sequelize';
 import sequelize from '../utils/database.js';
 const Product = sequelize.define('product', {
     id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false,

@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import catchAsync from '../utils/catchAsync.js';
 import {
   IProductValidation,
@@ -6,6 +6,7 @@ import {
 } from '../utils/validations/productValidation.js';
 import { idValidationSchema } from '../utils/validations/idValidation.js';
 import Product from '../models/productModel.js';
+import { createOne } from './handlerFactory.js';
 
 export const getAllProducts = catchAsync(
   async (req: Request, res: Response) => {
@@ -31,15 +32,15 @@ export const getProduct = catchAsync(
   }
 );
 
-export const createProduct = catchAsync(
-  async (req: Request<any, any, IProductValidation>, res: Response) => {
+export const validateProduct = catchAsync(
+  async (
+    req: Request<any, any, IProductValidation>,
+    res: Response,
+    next: NextFunction
+  ) => {
     await productValidationSchema.validate(req.body);
-
-    const product = await Product.create(req.body);
-
-    res.status(200).json({
-      status: 'success',
-      data: product,
-    });
+    next();
   }
 );
+
+export const createProduct = createOne(Product);
